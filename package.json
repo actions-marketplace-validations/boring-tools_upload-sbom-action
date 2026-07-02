@@ -1,0 +1,13 @@
+{
+  "name": "upload-sbom-action",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action for uploading CycloneDX SBOMs to boring.tools",
+  "scripts": {
+    "test": "bun test upload-sbom.test.ts",
+    "check": "bash -n upload-sbom.sh && bun test upload-sbom.test.ts && git diff --check"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

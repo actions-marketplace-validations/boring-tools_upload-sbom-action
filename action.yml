@@ -1,0 +1,35 @@
+name: Upload SBOM to boring.tools
+description: Upload an existing CycloneDX JSON SBOM to boring.tools for vulnerability scanning
+author: boring.tools
+
+inputs:
+  api-url:
+    description: boring.tools API URL
+    required: false
+    default: https://api.boring.tools
+  api-key:
+    description: boring.tools API key with SBOM upload access
+    required: true
+  project-id:
+    description: boring.tools project ID that should receive the SBOM
+    required: true
+  sbom-file:
+    description: Path to an existing CycloneDX JSON SBOM file
+    required: true
+  source-metadata:
+    description: Attach GitHub Actions source metadata to the upload payload
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Upload SBOM
+      shell: bash
+      run: ${{ github.action_path }}/upload-sbom.sh
+      env:
+        BORING_TOOLS_API_URL: ${{ inputs.api-url }}
+        BORING_TOOLS_API_KEY: ${{ inputs.api-key }}
+        BORING_TOOLS_PROJECT_ID: ${{ inputs.project-id }}
+        BORING_TOOLS_SBOM_FILE: ${{ inputs.sbom-file }}
+        BORING_TOOLS_SOURCE_METADATA: ${{ inputs.source-metadata }}
